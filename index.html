@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astra ProfitHub - Investment Platform</title>
+    <style>
+        :root {
+            --primary-blue: #001f3f;
+            --accent-gold: #ffd700;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+        }
+
+        /* Landing Page Styles */
+        #landingPage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            text-align: center;
+            color: white;
+        }
+
+        .landing-logo {
+            width: 120px;
+            height: 120px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin: 0 auto 20px;
+        }
+
+        .landing-title {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+
+        .landing-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .auth-buttons-landing {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .auth-btn-landing {
+            background: var(--accent-gold);
+            color: var(--primary-blue);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+
+        .auth-btn-landing:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Authentication Forms */
+        .auth-container {
+            display: none;
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            width: 90%;
+            max-width: 450px;
+            margin: 2rem auto;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .auth-header h2 {
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .auth-tab.active {
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--accent-gold);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary-blue);
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            border-color: var(--accent-gold);
+            outline: none;
+        }
+
+        .submit-btn {
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background: #002b5c;
+        }
+
+        .back-to-landing {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--primary-blue);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Main App Styles */
+        #appContent {
+            display: none;
+        }
+
+        .header {
+            background: var(--primary-blue);
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+        }
+
+        .brand-text {
+            color: var(--white);
+        }
+
+        .brand-text h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-text .accent {
+            color: var(--accent-gold);
+        }
+
+        .user-info {
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .auth-btn {
+            background: var(--accent-gold);
+            color: var(--primary-blue);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .auth-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            border-left: 4px solid var(--accent-gold);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 0.5rem;
+        }
+
+        .vip-plan {
+            background: linear-gradient(45deg, var(--primary-blue), #002b5c);
+            color: var(--white);
+        }
+
+        .vip-plan h2 {
+            color: var(--accent-gold);
+            border-bottom-color: var(--accent-gold);
+        }
+
+        .plan-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .plan-details {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+        }
+
+        .wallet-address {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            word-break: break-all;
+            border: 1px dashed #ccc;
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--white);
+            padding: 2rem;
+            opacity: 0.8;
+        }
+
+        .highlight {
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: var(--shadow);
+        }
+
+        .modal h2 {
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .modal-footer {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .switch-form {
+            background: none;
+            border: none;
+            color: var(--primary-blue);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .close-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+        }
+
+        /* Interactive elements styles */
+        .clickable {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 12px 15px;
+            border-radius: 8px;
+        }
+
+        .clickable:hover {
+            background-color: rgba(255, 215, 0, 0.1);
+            transform: translateX(5px);
+        }
+
+        .select-plan-btn {
+            background: linear-gradient(45deg, var(--accent-gold), #ffed4e);
+            color: var(--primary-blue);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .select-plan-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .copy-btn {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .clear-btn {
+            background: linear-gradient(45deg, #6c757d, #868e96);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .clear-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.4);
+        }
+
+        /* Make the deposit section stand out */
+        #depositSection {
+            animation: slideIn 0.5s ease-out;
+            grid-column: 1 / -1;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Admin Panel Styles */
+        .admin-section {
+            background: #1a1a1a !important;
+            color: white;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .admin-table th, .admin-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #444;
+        }
+
+        .admin-table th {
+            background: var(--primary-blue);
+            color: var(--accent-gold);
+        }
+
+        .status-pending { color: #ffc107; }
+        .status-completed { color: #28a745; }
+        .status-failed { color: #dc3545; }
+
+        /* Dashboard Styles */
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .auth-buttons-landing {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .auth-btn-landing {
+                width: 100%;
+            }
+            
+            .landing-title {
+                font-size: 2.5rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            #depositSection {
+                grid-column: 1;
+            }
+            
+            .dashboard-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Landing Page -->
+    <div id="landingPage">
+        <div class="container">
+            <div class="landing-logo">AP</div>
+            <h1 class="landing-title">ASTRA <span style="color: var(--accent-gold);">PROFITHUB</span></h1>
+            <p class="landing-subtitle">Smart Investments, Secure Returns</p>
+            
+            <div class="auth-buttons-landing">
+                <button class="auth-btn-landing" onclick="showAuthForm('login')">Login</button>
+                <button class="auth-btn-landing" onclick="showAuthForm('register')">Sign Up</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Authentication Forms -->
+    <div class="container">
+        <div id="authContainer" class="auth-container">
+            <div class="auth-header">
+                <h2 id="authTitle">Welcome Back</h2>
+                <p id="authSubtitle">Sign in to your account</p>
+            </div>
+            
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="switchAuthTab('login')">Login</div>
+                <div class="auth-tab" onclick="switchAuthTab('register')">Sign Up</div>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active">
+                <div class="form-group">
+                    <label for="loginUsername">Username or Email:</label>
+                    <input type="text" id="loginUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password:</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+            
+            <!-- Registration Form -->
+            <form id="registerForm" class="auth-form">
+                <div class="form-group">
+                    <label for="registerName">Full Name:</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email:</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerUsername">Username:</label>
+                    <input type="text" id="registerUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password:</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="referralCode">Referral Code (Optional):</label>
+                    <input type="text" id="referralCode">
+                </div>
+                <button type="submit" class="submit-btn">Create Account</button>
+            </form>
+            
+            <div class="back-to-landing">
+                <button class="back-btn" onclick="backToLanding()">← Back to Home</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application Content -->
+    <div id="appContent">
+        <div class="container">
+            <header class="header">
+                <div class="logo-section">
+                    <div class="logo">AP</div>
+                    <div class="brand-text">
+                        <h1>ASTRA <span class="accent">PROFITHUB</span></h1>
+                        <p>Smart Investments, Secure Returns</p>
+                    </div>
+                </div>
+                
+                <div id="userInfo" class="user-info">
+                    <span>Welcome, <span id="userDisplayName"></span></span>
+                    <span id="userBalance">Balance: $<span id="balanceAmount">0</span></span>
+                    <button class="auth-btn" onclick="logout()">Logout</button>
+                    <button class="auth-btn" onclick="showModal('adminModal')" id="adminBtn" style="display: none;">Admin</button>
+                </div>
+            </header>
+
+            <!-- User Dashboard -->
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-label">Account Balance</div>
+                    <div class="stat-value">$<span id="dashboardBalance">0</span></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Investment</div>
+                    <div class="stat-value">$<span id="totalInvestment">0</span></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Earnings</div>
+                    <div class="stat-value">$<span id="totalEarnings">0</span></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Referrals</div>
+                    <div class="stat-value"><span id="referralCount">0</span></div>
+                </div>
+            </div>
+
+            <div class="grid" id="mainContent">
+                <!-- Interactive VIP Plans Section -->
+                <div class="card vip-plan">
+                    <h2>💰 VIP Investment Plans - Click to Select</h2>
+                    
+                    <!-- VIP 1 -->
+                    <div class="plan-item clickable" onclick="selectPlan('VIP 1', '5', '1', '11')">
+                        <span><strong>VIP 1</strong></span>
+                        <span>Investment: $5</span>
+                    </div>
+                    <div class="plan-details">
+                        <div>Daily Return: <span class="highlight">$1 USD</span></div>
+                        <div>Recharge Bonus: <span class="highlight">$1 USD</span></div>
+                        <div>Total Return: <span class="highlight">$11 USD</span></div>
+                        <div>Duration: 10 days</div>
+                        <button class="select-plan-btn" onclick="selectPlan('VIP 1', '5', '1', '11')">
+                            ✅ Select VIP 1 Plan
+                        </button>
+                    </div>
+
+                    <!-- VIP 2 -->
+                    <div class="plan-item clickable" onclick="selectPlan('VIP 2', '10', '2', '22')">
+                        <span><strong>VIP 2</strong></span>
+                        <span>Investment: $10</span>
+                    </div>
+                    <div class="plan-details">
+                        <div>Daily Return: <span class="highlight">$2 USD</span></div>
+                        <div>Recharge Bonus: <span class="highlight">$2 USD</span></div>
+                        <div>Total Return: <span class="highlight">$22 USD</span></div>
+                        <div>Duration: 10 days</div>
+                        <button class="select-plan-btn" onclick="selectPlan('VIP 2', '10', '2', '22')">
+                            ✅ Select VIP 2 Plan
+                        </button>
+                    </div>
+
+                    <!-- VIP 3 -->
+                    <div class="plan-item clickable" onclick="selectPlan('VIP 3', '15', '3', '33')">
+                        <span><strong>VIP 3</strong></span>
+                        <span>Investment: $15</span>
+                    </div>
+                    <div class="plan-details">
+                        <div>Daily Return: <span class="highlight">$3 USD</span></div>
+                        <div>Recharge Bonus: <span class="highlight">$3 USD</span></div>
+                        <div>Total Return: <span class="highlight">$33 USD</span></div>
+                        <div>Duration: 10 days</div>
+                        <button class="select-plan-btn" onclick="selectPlan('VIP 3', '15', '3', '33')">
+                            ✅ Select VIP 3 Plan
+                        </button>
+                    </div>
+
+                    <!-- VIP 4 -->
+                    <div class="plan-item clickable" onclick="selectPlan('VIP 4', '20', '4', '44')">
+                        <span><strong>VIP 4</strong></span>
+                        <span>Investment: $20</span>
+                    </div>
+                    <div class="plan-details">
+                        <div>Daily Return: <span class="highlight">$4 USD</span></div>
+                        <div>Recharge Bonus: <span class="highlight">$4 USD</span></div>
+                        <div>Total Return: <span class="highlight">$44 USD</span></div>
+                        <div>Duration: 10 days</div>
+                        <button class="select-plan-btn" onclick="selectPlan('VIP 4', '20', '4', '44')">
+                            ✅ Select VIP 4 Plan
+                        </button>
+                    </div>
+
+                    <!-- VIP 5 -->
+                    <div class="plan-item clickable" onclick="selectPlan('VIP 5', '30', '6', '65')">
+                        <span><strong>VIP 5</strong></span>
+                        <span>Investment: $30</span>
+                    </div>
+                    <div class="plan-details">
+                        <div>Daily Return: <span class="highlight">$6 USD</span></div>
+                        <div>Recharge Bonus: <span class="highlight">$5 USD</span></div>
+                        <div>Total Return: <span class="highlight">$65 USD</span></div>
+                        <div>Duration: 10 days</div>
+                        <button class="select-plan-btn" onclick="selectPlan('VIP 5', '30', '6', '65')">
+                            ✅ Select VIP 5 Plan
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>💳 Withdrawal Rules</h2>
+                    <div class="plan-details">
+                        <div><strong>Minimum Withdrawal:</strong> <span class="highlight">$5 USD</span></div>
+                        <div><strong>Active Sign-in Required:</strong> 5 consecutive days</div>
+                        <div><strong>Processing Time:</strong> 24-48 hours</div>
+                        <div><strong>Withdrawal Fee:</strong> 0% (Free)</div>
+                    </div>
+                    <ul>
+                        <li>Must be active for 5 consecutive days before withdrawal</li>
+                        <li>Daily sign-in bonus counts toward activity</li>
+                        <li>VIP members get priority processing</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h2>👥 Referral Program</h2>
+                    <div class="plan-details">
+                        <div><strong>Referral Bonus:</strong> <span class="highlight">$0.5 per referral</span></div>
+                        <div><strong>Minimum Withdrawal:</strong> <span class="highlight">$10 USD</span></div>
+                        <div><strong>VIP Requirement:</strong> 5+ referrals must purchase VIP</div>
+                    </div>
+                    <ul>
+                        <li>3-level referral commission system</li>
+                        <li>Lifetime earnings from referrals</li>
+                        <li>Real-time referral tracking</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h2>🎁 Daily Rewards</h2>
+                    <div class="plan-details">
+                        <div><strong>Daily Sign-in Bonus:</strong> <span class="highlight">$0.1 USD</span></div>
+                        <div><strong>Weekly Bonus:</strong> $1 for 7 consecutive days</div>
+                        <div><strong>Monthly Loyalty:</strong> $5 bonus for 30 days</div>
+                    </div>
+                    <p>Daily rewards help you meet the 5-day active requirement for withdrawals!</p>
+                </div>
+
+                <!-- Interactive Deposit Section - Shows after plan selection -->
+                <div class="card" id="depositSection" style="display: none; border: 2px solid var(--accent-gold);">
+                    <h2>🚀 Ready to Invest!</h2>
+                    
+                    <div id="selectedPlanInfo">
+                        <!-- Plan details will appear here automatically -->
+                    </div>
+                    
+                    <div class="plan-details">
+                        <h3>💳 Deposit Instructions</h3>
+                        <p><strong>Send EXACT amount to this USDT (BEP-20) address:</strong></p>
+                        
+                        <div class="wallet-address" id="walletAddress">
+                            0x41ef699B7C10C04a6f7c47D0AB0f19CA8398583a
+                        </div>
+                        
+                        <button onclick="copyWalletAddress()" class="copy-btn">
+                            📋 Copy Wallet Address
+                        </button>
+                        
+                        <!-- Deposit Confirmation Form -->
+                        <div id="depositForm" style="margin-top: 2rem; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                            <h4>📝 Confirm Your Deposit</h4>
+                            <form id="userDepositForm">
+                                <div style="margin-bottom: 15px;">
+                                    <label><strong>Transaction Hash:</strong></label>
+                                    <input type="text" id="transactionHash" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px;" placeholder="Paste your transaction ID here">
+                                </div>
+                                
+                                <button type="button" onclick="submitDeposit()" class="copy-btn" style="background: linear-gradient(45deg, #007bff, #0056b3);">
+                                    ✅ Submit Deposit Confirmation
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <div style="margin-top: 1rem; padding: 15px; background: #fff3cd; border-radius: 8px; border-left: 4px solid #ffc107;">
+                            <h4>📋 Important Notes:</h4>
+                            <ul>
+                                <li><strong>Network:</strong> BEP-20 (Binance Smart Chain) ONLY</li>
+                                <li><strong>Token:</strong> USDT Only - Do not send other tokens</li>
+                                <li><strong>Amount:</strong> Send the exact investment amount</li>
+                                <li><strong>Confirmation:</strong> Submit this form after sending your payment</li>
+                            </ul>
+                        </div>
+                        
+                        <button onclick="clearSelection()" class="clear-btn" style="margin-top: 15px;">
+                            🔄 Choose Different Plan
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>📱 Contact Support</h2>
+                    <div class="plan-details">
+                        <div><strong>Telegram:</strong> @AstraSupport</div>
+                        <div><strong>Email:</strong> support@astraprofithub.com</div>
+                        <div><strong>Response Time:</strong> Within 6 hours</div>
+                    </div>
+                    <p>Available 24/7 for VIP members</p>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <p>&copy; 2024 Astra ProfitHub. All rights reserved.</p>
+                <p>Minimum withdrawal: $5 USD | Active 5 days required</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('adminLoginModal')">×</button>
+            <h2>Admin Login</h2>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label>Admin Password:</label>
+                    <input type="password" id="adminPassword" required>
+                </div>
+                <button type="submit" class="submit-btn">Login as Admin</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <button class="close-btn" onclick="closeModal('adminModal')">×</button>
+            <h2>Admin Panel</h2>
+            
+            <div class="card admin-section">
+                <h3>📊 All User Deposits</h3>
+                <div class="admin-table-container" style="overflow-x: auto;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Plan</th>
+                                <th>Amount</th>
+                                <th>User Wallet</th>
+                                <th>TX Hash</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="depositsTable">
+                            <!-- Deposits will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <button class="copy-btn" onclick="exportToCSV()">📥 Export to CSV</button>
+                    <button class="clear-btn" onclick="clearAllDeposits()" style="background: #dc3545; margin-top: 10px;">🗑️ Clear All Data</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Admin Configuration - CHANGE THESE
+        const ADMIN_PASSWORD = "admin123"; // Change this password
+        const ADMIN_EMAIL = "elorabethel125@gmail.com"; // Change to your email
+
+        // User Management
+        let currentUser = null;
+        let isAdmin = false;
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoginStatus();
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                loginUser();
+            });
+
+            // Register form
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                registerUser();
+            });
+
+            // Admin login form
+            document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                loginAdmin();
+            });
+        }
+
+        // Authentication Page Functions
+        function showAuthForm(type) {
+            document.getElementById('landingPage').style.display = 'none';
+            document.getElementById('authContainer').style.display = 'block';
+            
+            if (type === 'login') {
+                switchAuthTab('login');
+            } else {
+                switchAuthTab('register');
+            }
+        }
+
+        function backToLanding() {
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('landingPage').style.display = 'flex';
+        }
+
+        function switchAuthTab(tab) {
+            // Update tabs
+            const tabs = document.querySelectorAll('.auth-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            if (tab === 'login') {
+                document.querySelector('.auth-tab:nth-child(1)').classList.add('active');
+                document.getElementById('loginForm').classList.add('active');
+                document.getElementById('registerForm').classList.remove('active');
+                document.getElementById('authTitle').textContent = 'Welcome Back';
+                document.getElementById('authSubtitle').textContent = 'Sign in to your account';
+            } else {
+                document.querySelector('.auth-tab:nth-child(2)').classList.add('active');
+                document.getElementById('registerForm').classList.add('active');
+                document.getElementById('loginForm').classList.remove('active');
+                document.getElementById('authTitle').textContent = 'Create Account';
+                document.getElementById('authSubtitle').textContent = 'Join Astra ProfitHub today';
+            }
+        }
+
+        // User Registration
+        function registerUser() {
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+            const referralCode = document.getElementById('referralCode').value;
+
+            // Get existing users
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+
+            // Check if username already exists
+            if (users.find(user => user.username === username)) {
+                alert('Username already exists!');
+                return;
+            }
+
+            // Check if email already exists
+            if (users.find(user => user.email === email)) {
+                alert('Email already registered!');
+                return;
+            }
+
+            // Generate a referral code for the new user
+            const userReferralCode = generateReferralCode();
+
+            // Create new user
+            const newUser = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                username: username,
+                password: password, // In production, hash this!
+                referralCode: userReferralCode,
+                referredBy: referralCode || null,
+                joinDate: new Date().toISOString(),
+                balance: 0,
+                totalInvestment: 0,
+                totalEarnings: 0,
+                referrals: 0,
+                referralEarnings: 0,
+                investments: [],
+                lastLogin: new Date().toISOString()
+            };
+
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            // If there was a referral code, update the referrer's count
+            if (referralCode) {
+                updateReferralCount(referralCode);
+            }
+
+            alert('Registration successful! Please login.');
+            switchAuthTab('login');
+        }
+
+        function generateReferralCode() {
+            return Math.random().toString(36).substring(2, 8).toUpperCase();
+        }
+
+        function updateReferralCount(referralCode) {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const referrer = users.find(user => user.referralCode === referralCode);
+            
+            if (referrer) {
+                referrer.referrals += 1;
+                referrer.referralEarnings += 0.5; // $0.5 per referral
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+        }
+
+        // User Login
+        function loginUser() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => (u.username === username || u.email === username) && u.password === password);
+
+            if (user) {
+                currentUser = user;
+                user.lastLogin = new Date().toISOString();
+                
+                // Update user in storage
+                const userIndex = users.findIndex(u => u.id === user.id);
+                users[userIndex] = user;
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                showApp();
+                alert(`Welcome back, ${user.name}!`);
+            } else {
+                alert('Invalid username/email or password!');
+            }
+        }
+
+        // Admin Login
+        function loginAdmin() {
+            const password = document.getElementById('adminPassword').value;
+
+            if (password === ADMIN_PASSWORD) {
+                isAdmin = true;
+                localStorage.setItem('isAdmin', 'true');
+                updateUI();
+                closeModal('adminLoginModal');
+                showModal('adminModal');
+                loadDepositsTable();
+            } else {
+                alert('Invalid admin password!');
+            }
+        }
+
+        // Show Application
+        function showApp() {
+            document.getElementById('landingPage').style.display = 'none';
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('appContent').style.display = 'block';
+            updateUI();
+            updateDashboard();
+        }
+
+        // Update Dashboard
+        function updateDashboard() {
+            if (!currentUser) return;
+            
+            document.getElementById('dashboardBalance').textContent = currentUser.balance.toFixed(2);
+            document.getElementById('totalInvestment').textContent = currentUser.totalInvestment.toFixed(2);
+            document.getElementById('totalEarnings').textContent = currentUser.totalEarnings.toFixed(2);
+            document.getElementById('referralCount').textContent = currentUser.referrals;
+        }
+
+        // Logout
+        function logout() {
+            currentUser = null;
+            isAdmin = false;
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('isAdmin');
+            
+            document.getElementById('appContent').style.display = 'none';
+            document.getElementById('landingPage').style.display = 'flex';
+            
+            alert('Logged out successfully!');
+        }
+
+        // Update UI based on login status
+        function updateUI() {
+            const userDisplayName = document.getElementById('userDisplayName');
+            const balanceAmount = document.getElementById('balanceAmount');
+            const adminBtn = document.getElementById('adminBtn');
+
+            if (currentUser) {
+                userDisplayName.textContent = currentUser.name;
+                balanceAmount.textContent = currentUser.balance.toFixed(2);
+                
+                if (isAdmin) {
+                    adminBtn.style.display = 'block';
+                } else {
+                    adminBtn.style.display = 'none';
+                }
+            }
+        }
+
+        // Check login status on page load
+        function checkLoginStatus() {
+            const savedUser = localStorage.getItem('currentUser');
+            const savedAdmin = localStorage.getItem('isAdmin');
+
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showApp();
+            }
+
+            if (savedAdmin === 'true') {
+                isAdmin = true;
+            }
+
+            updateUI();
+        }
+
+        // Modal Functions
+        function showModal(modalId) {
+            if (modalId === 'adminModal' && !isAdmin) {
+                showModal('adminLoginModal');
+                return;
+            }
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Plan Selection
+        function selectPlan(planName, investmentAmount, dailyReturn, totalReturn) {
+            if (!currentUser) {
+                alert('Please login first to select a plan!');
+                showAuthForm('login');
+                return;
+            }
+
+            const selectedPlan = {
+                name: planName,
+                amount: investmentAmount,
+                daily: dailyReturn,
+                total: totalReturn
+            };
+            
+            localStorage.setItem('selectedPlan', JSON.stringify(selectedPlan));
+            showDepositSection(selectedPlan);
+        }
+
+        function showDepositSection(plan) {
+            document.getElementById('selectedPlanInfo').innerHTML = `
+                <h3>📍 Selected Plan: ${plan.name}</h3>
+                <div style="background: rgba(255,215,0,0.1); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <p><strong>Investment Amount:</strong> $${plan.amount} USD</p>
+                    <p><strong>Daily Return:</strong> $${plan.daily} USD</p>
+                    <p><strong>Total Return:</strong> $${plan.total} USD</p>
+                </div>
+            `;
+            
+            document.getElementById('depositSection').style.display = 'block';
+            document.getElementById('depositSection').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+
+        // Deposit Management
+        function submitDeposit() {
+            if (!currentUser) {
+                alert('Please login first!');
+                return;
+            }
+
+            const transactionHash = document.getElementById('transactionHash').value;
+            const selectedPlan = JSON.parse(localStorage.getItem('selectedPlan'));
+            
+            if (!transactionHash) {
+                alert('❌ Please enter transaction hash');
+                return;
+            }
+            
+            const depositRecord = {
+                id: Date.now(),
+                username: currentUser.username,
+                userEmail: currentUser.email,
+                userFullName: currentUser.name,
+                userWallet: currentUser.walletAddress || 'Not provided',
+                transactionHash: transactionHash,
+                plan: selectedPlan.name,
+                amount: selectedPlan.amount,
+                date: new Date().toISOString(),
+                status: 'pending'
+            };
+            
+            saveDepositRecord(depositRecord);
+            sendEmailNotification(depositRecord);
+            
+            alert('✅ Deposit submitted successfully! We will verify your payment within 24 hours.');
+            document.getElementById('userDepositForm').reset();
+        }
+
+        function saveDepositRecord(record) {
+            let deposits = JSON.parse(localStorage.getItem('userDeposits')) || [];
+            deposits.push(record);
+            localStorage.setItem('userDeposits', JSON.stringify(deposits));
+        }
+
+        // Email Notification (using mailto as fallback)
+        function sendEmailNotification(depositRecord) {
+            const subject = `🚀 NEW DEPOSIT - ${depositRecord.userFullName} - ${depositRecord.plan}`;
+            const body = `
+NEW DEPOSIT RECEIVED!
+
+👤 User Details:
+- Name: ${depositRecord.userFullName}
+- Username: ${depositRecord.username}
+- Email: ${depositRecord.userEmail}
+
+💰 Investment Details:
+- Plan: ${depositRecord.plan}
+- Amount: $${depositRecord.amount} USD
+- Date: ${new Date(depositRecord.date).toLocaleString()}
+
+🔗 Transaction:
+- TX Hash: ${depositRecord.transactionHash}
+- Status: ${depositRecord.status}
+
+Please verify this transaction immediately.
+            `.trim();
+            
+            const mailtoLink = `mailto:${ADMIN_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.open(mailtoLink);
+        }
+
+        // Admin Functions
+        function loadDepositsTable() {
+            const deposits = JSON.parse(localStorage.getItem('userDeposits')) || [];
+            const tableBody = document.getElementById('depositsTable');
+            
+            if (deposits.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No deposits found</td></tr>';
+                return;
+            }
+            
+            tableBody.innerHTML = deposits.map(deposit => `
+                <tr>
+                    <td>${deposit.username}</td>
+                    <td>${deposit.plan}</td>
+                    <td>$${deposit.amount}</td>
+                    <td style="font-family: monospace; font-size: 0.8rem;">${deposit.userWallet}</td>
+                    <td style="font-family: monospace; font-size: 0.8rem;">${deposit.transactionHash}</td>
+                    <td>${new Date(deposit.date).toLocaleDateString()}</td>
+                    <td class="status-${deposit.status}">${deposit.status}</td>
+                </tr>
+            `).join('');
+        }
+
+        function exportToCSV() {
+            const deposits = JSON.parse(localStorage.getItem('userDeposits')) || [];
+            if (deposits.length === 0) {
+                alert('No data to export!');
+                return;
+            }
+            
+            let csv = 'Username,Plan,Amount,User Wallet,Transaction Hash,Date,Status\n';
+            deposits.forEach(deposit => {
+                csv += `"${deposit.username}","${deposit.plan}","${deposit.amount}","${deposit.userWallet}","${deposit.transactionHash}","${deposit.date}","${deposit.status}"\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `deposits-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        function clearAllDeposits() {
+            if (confirm('Are you sure you want to delete ALL deposit records? This cannot be undone!')) {
+                localStorage.removeItem('userDeposits');
+                loadDepositsTable();
+                alert('All deposit records cleared!');
+            }
+        }
+
+        // Utility Functions
+        function copyWalletAddress() {
+            const walletAddress = "0x41ef699B7C10C04a6f7c47D0AB0f19CA8398583a";
+            navigator.clipboard.writeText(walletAddress).then(() => {
+                alert('✅ Wallet address copied to clipboard!\n\nAddress: ' + walletAddress);
+            }).catch(err => {
+                const textArea = document.createElement('textarea');
+                textArea.value = walletAddress;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('✅ Wallet address copied to clipboard!');
+            });
+        }
+
+        function clearSelection() {
+            localStorage.removeItem('selectedPlan');
+            document.getElementById('depositSection').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
